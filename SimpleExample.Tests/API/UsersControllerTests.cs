@@ -29,6 +29,7 @@ public class UsersControllerTests
             new UserDto { Id = Guid.NewGuid(), FirstName = "Maija", LastName = "V", Email = "m@v.com" }
         };
 
+        // Mock: palauttaa listan käyttäjiä
         _mockService
             .Setup(x => x.GetAllAsync())
             .ReturnsAsync(users);
@@ -49,6 +50,7 @@ public class UsersControllerTests
         Guid userId = Guid.NewGuid();
         UserDto user = new UserDto { Id = userId, FirstName = "Matti", LastName = "M", Email = "m@m.com" };
 
+        // Mock: löytää käyttäjän annetulla id:llä
         _mockService
             .Setup(x => x.GetByIdAsync(userId))
             .ReturnsAsync(user);
@@ -68,6 +70,7 @@ public class UsersControllerTests
         // Arrange
         Guid userId = Guid.NewGuid();
 
+        // Mock: ei löydä käyttäjää
         _mockService
             .Setup(x => x.GetByIdAsync(userId))
             .ReturnsAsync((UserDto?)null);
@@ -98,6 +101,7 @@ public class UsersControllerTests
             Email = createDto.Email
         };
 
+        // Mock: luo käyttäjän onnistuneesti
         _mockService
             .Setup(x => x.CreateAsync(createDto))
             .ReturnsAsync(createdUser);
@@ -124,6 +128,7 @@ public class UsersControllerTests
             Email = "matti@example.com"
         };
 
+        // Mock: heittää InvalidOperationException (duplikaatti)
         _mockService
             .Setup(x => x.CreateAsync(createDto))
             .ThrowsAsync(new InvalidOperationException("Duplicate"));
@@ -147,6 +152,7 @@ public class UsersControllerTests
             Email = "invalid"
         };
 
+        // Mock: heittää ArgumentException (validointivirhe)
         _mockService
             .Setup(x => x.CreateAsync(createDto))
             .ThrowsAsync(new ArgumentException("Validation error"));
@@ -180,6 +186,7 @@ public class UsersControllerTests
             Email = dto.Email
         };
 
+        // Mock: päivittää käyttäjän onnistuneesti
         _mockService
             .Setup(x => x.UpdateAsync(id, dto))
             .ReturnsAsync(updatedUser);
@@ -207,6 +214,7 @@ public class UsersControllerTests
             Email = "matti@example.com"
         };
 
+        // Mock: ei löydä käyttäjää
         _mockService
             .Setup(x => x.UpdateAsync(id, dto))
             .ReturnsAsync((UserDto?)null);
@@ -233,6 +241,7 @@ public class UsersControllerTests
             Email = "invalid"
         };
 
+        // Mock: heittää ArgumentException (validointivirhe)
         _mockService
             .Setup(x => x.UpdateAsync(id, dto))
             .ThrowsAsync(new ArgumentException("Validation error"));
@@ -251,6 +260,7 @@ public class UsersControllerTests
         // Arrange
         Guid id = Guid.NewGuid();
 
+        // Mock: poistaa käyttäjän onnistuneesti
         _mockService
             .Setup(x => x.DeleteAsync(id))
             .ReturnsAsync(true);
@@ -269,6 +279,7 @@ public class UsersControllerTests
         // Arrange
         Guid id = Guid.NewGuid();
 
+        // Mock: ei löydä käyttäjää
         _mockService
             .Setup(x => x.DeleteAsync(id))
             .ReturnsAsync(false);
